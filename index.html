@@ -190,8 +190,9 @@
     <div class="vinyl" id="vinyl"></div>
     <div class="music-info">
       <div class="music-title">Floricienta — Flores Amarillas 🌻</div>
-      <source src="cancion.mp3" type="audio/mpeg">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      <audio id="audioPlayer" controls controlsList="nodownload" autoplay loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta el reproductor de audio.
       </audio>
     </div>
   </div>
@@ -226,6 +227,13 @@ Me alegra mucho verte crecer y que nos motivarnos mutuamente desde hace años . 
 
     audio.onplay = () => vinyl.style.animationPlayState = 'running';
     audio.onpause = () => vinyl.style.animationPlayState = 'paused';
+
+    // Reproducción al primer toque/clic por bloqueo de navegadores
+    document.addEventListener('click', function() {
+      if (audio.paused) {
+        audio.play().catch(e => console.log('Autoplay bloqueado'));
+      }
+    }, { once: true });
 
     // Función para mostrar respuesta a la pregunta
     function responder(msg) {
