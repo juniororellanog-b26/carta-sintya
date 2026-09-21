@@ -13,7 +13,6 @@
     }
 
     body {
-      /* Fondo con Snoopy y flores */
       background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
                   url('snoopy.jpg') center/cover no-repeat fixed;
       background-color: #2b1e17;
@@ -21,38 +20,41 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       padding: 20px 15px;
       position: relative;
       overflow-x: hidden;
       color: #ffffff;
     }
 
-    /* Reproductor de música estilo Vinilo */
+    /* Reproductor de Música */
     .music-card {
-      background: rgba(30, 30, 30, 0.85);
+      background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(10px);
-      border-radius: 50px;
-      padding: 10px 20px 10px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 12px 18px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.1);
-      max-width: 380px;
+      gap: 15px;
       width: 100%;
+      max-width: 420px;
+      margin-bottom: 15px;
+      z-index: 2;
     }
 
     .vinyl {
       width: 45px;
       height: 45px;
-      background: radial-gradient(circle, #000 30%, #222 31%, #000 60%);
       border-radius: 50%;
-      border: 2px solid #444;
+      background: radial-gradient(circle, #000 30%, #333 31%, #111 60%, #ffe600 61%);
       animation: spin 4s linear infinite;
       animation-play-state: paused;
       flex-shrink: 0;
+    }
+
+    .vinyl.playing {
+      animation-play-state: running;
     }
 
     @keyframes spin {
@@ -60,25 +62,28 @@
     }
 
     .music-info {
-      flex-grow: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       overflow: hidden;
     }
 
     .music-title {
       font-size: 13px;
-      font-weight: bold;
+      font-weight: 600;
+      color: #ffe600;
       white-space: nowrap;
-      text-overflow: ellipsis;
       overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     audio {
       width: 100%;
-      height: 25px;
-      margin-top: 4px;
+      height: 32px;
     }
 
-    /* Tarjeta Principal de la Carta */
+    /* Carta Principal */
     .card {
       background: rgba(25, 25, 25, 0.88);
       backdrop-filter: blur(15px);
@@ -111,7 +116,6 @@
       border-radius: 15px;
     }
 
-    /* Sección de Pregunta y Botones */
     .question-box {
       border-top: 1px solid rgba(255,255,255,0.1);
       padding-top: 20px;
@@ -167,7 +171,7 @@
       font-size: 14px;
     }
 
-    /* Animación de Emojis cayendo (Flores Amarillas) */
+    /* Animación de Emojis cayendo */
     .emoji-fall {
       position: fixed;
       top: -10%;
@@ -185,12 +189,12 @@
 </head>
 <body>
 
-<!-- Reproductor Superior -->
+  <!-- Reproductor Superior Normal -->
   <div class="music-card">
     <div class="vinyl" id="vinyl"></div>
     <div class="music-info">
       <div class="music-title">Floricienta — Flores Amarillas 🌻</div>
-      <audio id="audioPlayer" controls controlsList="nodownload" autoplay loop>
+      <audio id="audioPlayer" controls controlsList="nodownload" loop preload="auto">
         <source src="cancion.mp3" type="audio/mpeg">
       </audio>
     </div>
@@ -220,28 +224,21 @@ Me alegra mucho verte crecer y que nos motivarnos mutuamente desde hace años . 
   </div>
 
   <script>
-    // Control de giro del vinilo al reproducir música
     const audio = document.getElementById('audioPlayer');
     const vinyl = document.getElementById('vinyl');
 
-    audio.onplay = () => vinyl.style.animationPlayState = 'running';
-    audio.onpause = () => vinyl.style.animationPlayState = 'paused';
+    // Control del vinilo con la música
+    audio.onplay = () => vinyl.classList.add('playing');
+    audio.onpause = () => vinyl.classList.remove('playing');
 
-    // Reproducción al primer toque/clic por bloqueo de navegadores
-    document.addEventListener('click', function() {
-      if (audio.paused) {
-        audio.play().catch(e => console.log('Autoplay bloqueado'));
-      }
-    }, { once: true });
-
-    // Función para mostrar respuesta a la pregunta
+    // Respuesta a botones
     function responder(msg) {
       const box = document.getElementById('responseMessage');
       box.innerText = msg;
       box.style.display = 'block';
     }
 
-    // Lluvia constante de flores amarillas y corazones
+    // Lluvia constante de flores amarillas
     const emojis = ['🌻', '🌼', '💛', '❤️', '🥰'];
     function createEmoji() {
       const emoji = document.createElement('div');
