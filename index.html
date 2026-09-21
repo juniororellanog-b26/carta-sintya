@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Una sorpresa para ti ❤️</title>
+  <title>No serás espectadora ❤️</title>
   <style>
     * {
       box-sizing: border-box;
@@ -11,91 +11,243 @@
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
     body {
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+      /* Fondo con Snoopy y flores */
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                  url('snoopy.jpg') center/cover no-repeat fixed;
+      background-color: #2b1e17;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      padding: 20px;
+      justify-content: flex-start;
+      padding: 20px 15px;
+      position: relative;
+      overflow-x: hidden;
+      color: #ffffff;
     }
-    .card {
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      max-width: 450px;
+
+    /* Reproductor de música estilo Vinilo */
+    .music-card {
+      background: rgba(30, 30, 30, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 10px 20px 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      max-width: 380px;
       width: 100%;
+    }
+
+    .vinyl {
+      width: 45px;
+      height: 45px;
+      background: radial-gradient(circle, #000 30%, #222 31%, #000 60%);
+      border-radius: 50%;
+      border: 2px solid #444;
+      animation: spin 4s linear infinite;
+      animation-play-state: paused;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .music-info {
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    .music-title {
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    audio {
+      width: 100%;
+      height: 25px;
+      margin-top: 4px;
+    }
+
+    /* Tarjeta Principal de la Carta */
+    .card {
+      background: rgba(25, 25, 25, 0.88);
+      backdrop-filter: blur(15px);
+      border-radius: 24px;
+      padding: 25px 20px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.15);
       text-align: center;
+      z-index: 2;
     }
-    .heart {
-      font-size: 50px;
-      color: #e63946;
-      margin-bottom: 15px;
-      animation: beat 1.2s infinite;
-    }
-    @keyframes beat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
+
     h1 {
-      color: #2b2d42;
-      font-size: 24px;
-      margin-bottom: 10px;
+      font-size: 22px;
+      color: #ffe600;
+      margin-bottom: 15px;
+      font-weight: 700;
     }
-    p {
-      color: #555;
-      font-size: 16px;
+
+    .letter-text {
+      font-size: 14.5px;
       line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .btn {
-      background-color: #e63946;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background-color: #d62828;
-    }
-    .hidden-message {
-      display: none;
-      margin-top: 20px;
+      color: #e0e0e0;
+      text-align: left;
+      white-space: pre-line;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.05);
       padding: 15px;
-      background: #ffe5ec;
+      border-radius: 15px;
+    }
+
+    /* Sección de Pregunta y Botones */
+    .question-box {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+    }
+
+    .question-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      background: #ffe600;
+      color: #1a1a1a;
+      border: none;
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      background: #ffd000;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .response-message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background: #ffe600;
+      color: #000;
+      font-weight: bold;
       border-radius: 10px;
-      color: #9d0208;
-      font-weight: 500;
+      font-size: 14px;
+    }
+
+    /* Animación de Emojis cayendo (Flores Amarillas) */
+    .emoji-fall {
+      position: fixed;
+      top: -10%;
+      z-index: 1;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="heart">❤️</div>
-    <h1>Para Sintya</h1>
-    <p>Escribí esta carta especial para ti para recordar lo importante que eres para mí.</p>
-    
-    <button class="btn" onclick="mostrarMensaje()">Toca para abrir</button>
+  <!-- Reproductor Superior -->
+  <div class="music-card">
+    <div class="vinyl" id="vinyl"></div>
+    <div class="music-info">
+      <div class="music-title">Floricienta — Flores Amarillas 🌻</div>
+      <audio id="audioPlayer" controls controlsList="nodownload">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
 
-    <div id="mensaje" class="hidden-message">
-      <p>¡Gracias por estar siempre ahí! Eres una persona muy especial. ✨</p>
+  <!-- Carta Principal -->
+  <div class="card">
+    <h1>No serás espectadora 🌻</h1>
+    
+    <div class="letter-text">
+sintya este regalo lo hice para ti, hubieran sido en fisico pero por la toma tienes clases virtuales y no se cuando volveras.
+
+Estas flores son para ti una persona increíblemente amable desde que te conozco, que le gusta los museos, las cosas clasicas, tomar fotitos con las camaritas, buenos gustos musicales, aunque prefiere su mundo con audífonos, siempre saca su mejor versión para el resto, una buena madre con tus hijos de 4 patitas y lo más importante tienes al Señor nuestro salvador presente en tu vida . 
+
+Me alegra mucho verte crecer y que nos motivarnos mutuamente desde hace años . Espero que esto te saque una sonrisa ❤️
+    </div>
+
+    <!-- Pregunta con Alternativas -->
+    <div class="question-box">
+      <p class="question-title">¿Quieres salir a conocer un museo nuevo, otro día conmigo?</p>
+      <div class="options">
+        <button class="btn" onclick="responder('¡Genial! Prometo que será una visita increíble ✨🏛️')">Sí ❤️</button>
+        <button class="btn btn-secondary" onclick="responder('¡Anotado! Buscaré el mejor museo para ir 😉')">No deseo tu caramelo 🍬</button>
+      </div>
+      <div id="responseMessage" class="response-message"></div>
     </div>
   </div>
 
   <script>
-    function mostrarMensaje() {
-      const elemento = document.getElementById('mensaje');
-      if (elemento.style.display === 'block') {
-        elemento.style.display = 'none';
-      } else {
-        elemento.style.display = 'block';
-      }
+    // Control de giro del vinilo al reproducir música
+    const audio = document.getElementById('audioPlayer');
+    const vinyl = document.getElementById('vinyl');
+
+    audio.onplay = () => vinyl.style.animationPlayState = 'running';
+    audio.onpause = () => vinyl.style.animationPlayState = 'paused';
+
+    // Función para mostrar respuesta a la pregunta
+    function responder(msg) {
+      const box = document.getElementById('responseMessage');
+      box.innerText = msg;
+      box.style.display = 'block';
     }
+
+    // Lluvia constante de flores amarillas y corazones
+    const emojis = ['🌻', '🌼', '💛', '❤️', '🥰'];
+    function createEmoji() {
+      const emoji = document.createElement('div');
+      emoji.classList.add('emoji-fall');
+      emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.animationDuration = Math.random() * 3 + 4 + 's';
+      emoji.style.fontSize = Math.random() * 10 + 20 + 'px';
+      document.body.appendChild(emoji);
+
+      setTimeout(() => { emoji.remove(); }, 7000);
+    }
+    setInterval(createEmoji, 400);
   </script>
 
 </body>
